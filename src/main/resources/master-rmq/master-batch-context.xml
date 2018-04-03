@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:integration="http://www.springframework.org/schema/integration"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:property-placeholder order="1"
+		location="classpath*:application.properties" ignore-unresolvable="true" />
+
+	<bean id="chunkParameterListener"
+		class="org.springframework.batch.integration.chunk.ChunkParameterListener" />
+	<job id="testjob" xmlns="http://www.springframework.org/schema/batch">
+		<step id="step">
+			<tasklet>
+				<chunk reader="reader" processor="processor" writer="writer"
+					commit-interval="1">
+					<listeners>
+						<listener ref="chunkParameterListener" />
+					</listeners>
+				</chunk>
+			</tasklet>
+		</step>
+	</job>
+
+	<bean id="reader"
+		class="com.opencredo.sandbox.gawain.springbatch.remote.chunking.TestItemReader"
+		scope="step">
+
+		<property name="processBeanId" value="processor" />
+		<property name="writeBeanId" value="writer" />
+
+		<property name="items">
+			<list>
+				<value>http://test.com/item1   </value>
+				<value>http://test.com/item2   </value>
+				<value>http://test.com/item3   </value>
+				<value>http://test.com/item4   </value>
+				<value>http://test.com/item5   </value>
+				<value>http://test.com/item6   </value>
+				<value>http://test.com/item7   </value>
+				<value>http://test.com/item8   </value>
+				<value>http://test.com/item9   </value>
+				<value>http://test.com/item10  </value>
+				<value>http://test.com/item11 </value> <value>http://test.com/item12 
+					</value> <value>http://test.com/item13 </value> <value>http://test.com/item14 
+					</value> <value>http://test.com/item15 </value> <value>http://test.com/item16 
+					</value> <value>http://test.com/item17 </value> <value>http://test.com/item18 
+					</value> <value>http://test.com/item19 </value> <value>http://test.com/item20 
+					</value> <value>http://test.com/item21 </value> <value>http://test.com/item22 
+					</value> <value>http://test.com/item23 </value> <value>http://test.com/item24 
+					</value> <value>http://test.com/item25 </value> <value>http://test.com/item26 
+					</value> <value>http://test.com/item27 </value> <value>http://test.com/item28 
+					</value> <value>http://test.com/item29 </value> <value>http://test.com/item30 
+					</value> <value>http://test.com/item31 </value> <value>http://test.com/item32 
+					</value> <value>http://test.com/item33 </value> <value>http://test.com/item34 
+					</value> <value>http://test.com/item35 </value> <value>http://test.com/item36 
+					</value> <value>http://test.com/item37 </value> <value>http://test.com/item38 
+					</value> <value>http://test.com/item39 </value> <value>http://test.com/item40 
+					</value> <value>http://test.com/item41 </value> <value>http://test.com/item42 
+					</value> <value>http://test.com/item43 </value> <value>http://test.com/item44 
+					</value> <value>http://test.com/item45 </value> <value>http://test.com/item46 
+					</value> <value>http://test.com/item47 </value> <value>http://test.com/item48 
+					</value> <value>http://test.com/item49 </value> <value>http://test.com/item50 
+					</value> <value>http://test.com/item51 </value> <value>http://test.com/item52 
+					</value> <value>http://test.com/item53 </value> <value>http://test.com/item54 
+					</value> <value>http://test.com/item55 </value> <value>http://test.com/item56 
+					</value> <value>http://test.com/item57 </value> <value>http://test.com/item58 
+					</value> <value>http://test.com/item59 </value> <value>http://test.com/item60 
+					</value> <value>http://test.com/item61 </value> <value>http://test.com/item62 
+					</value> <value>http://test.com/item63 </value> <value>http://test.com/item64 
+					</value> <value>http://test.com/item65 </value> <value>http://test.com/item66 
+					</value> <value>http://test.com/item67 </value> <value>http://test.com/item68 
+					</value> <value>http://test.com/item69 </value> <value>http://test.com/item70 
+					</value> <value>http://test.com/item71 </value> <value>http://test.com/item72 
+					</value> <value>http://test.com/item73 </value> <value>http://test.com/item74 
+					</value> <value>http://test.com/item75 </value> <value>http://test.com/item76 
+					</value> <value>http://test.com/item77 </value> <value>http://test.com/item78 
+					</value> <value>http://test.com/item79 </value> <value>http://test.com/item80 
+					</value> <value>http://test.com/item81 </value> <value>http://test.com/item82 
+					</value> <value>http://test.com/item83 </value> <value>http://test.com/item84 
+					</value> <value>http://test.com/item85 </value> <value>http://test.com/item86 
+					</value> <value>http://test.com/item87 </value> <value>http://test.com/item88 
+					</value> <value>http://test.com/item89 </value> <value>http://test.com/item90 
+					</value> <value>http://test.com/item91 </value> <value>http://test.com/item92 
+					</value> <value>http://test.com/item93 </value> <value>http://test.com/item94 
+					</value> <value>http://test.com/item95 </value> <value>http://test.com/item96 
+					</value> <value>http://test.com/item97 </value> <value>http://test.com/item98 
+					</value> <value>http://test.com/item99 </value> <value>http://test.com/item100 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item101 
+					</value> <value>http://test.com/item102 </value> <value>http://test.com/item103 
+					</value> <value>http://test.com/item104 </value> <value>http://test.com/item105 
+					</value> <value>http://test.com/item106 </value> <value>http://test.com/item107 
+					</value> <value>http://test.com/item108 </value> <value>http://test.com/item109 
+					</value> <value>http://test.com/item110 </value> <value>http://test.com/item111 
+					</value> <value>http://test.com/item112 </value> <value>http://test.com/item113 
+					</value> <value>http://test.com/item114 </value> <value>http://test.com/item115 
+					</value> <value>http://test.com/item116 </value> <value>http://test.com/item117 
+					</value> <value>http://test.com/item118 </value> <value>http://test.com/item119 
+					</value> <value>http://test.com/item120 </value> <value>http://test.com/item121 
+					</value> <value>http://test.com/item122 </value> <value>http://test.com/item123 
+					</value> <value>http://test.com/item124 </value> <value>http://test.com/item125 
+					</value> <value>http://test.com/item126 </value> <value>http://test.com/item127 
+					</value> <value>http://test.com/item128 </value> <value>http://test.com/item129 
+					</value> <value>http://test.com/item130 </value> <value>http://test.com/item131 
+					</value> <value>http://test.com/item132 </value> <value>http://test.com/item133 
+					</value> <value>http://test.com/item134 </value> <value>http://test.com/item135 
+					</value> <value>http://test.com/item136 </value> <value>http://test.com/item137 
+					</value> <value>http://test.com/item138 </value> <value>http://test.com/item139 
+					</value> <value>http://test.com/item140 </value> <value>http://test.com/item141 
+					</value> <value>http://test.com/item142 </value> <value>http://test.com/item143 
+					</value> <value>http://test.com/item144 </value> <value>http://test.com/item145 
+					</value> <value>http://test.com/item146 </value> <value>http://test.com/item147 
+					</value> <value>http://test.com/item148 </value> <value>http://test.com/item149 
+					</value> <value>http://test.com/item150 </value> <value>http://test.com/item151 
+					</value> <value>http://test.com/item152 </value> <value>http://test.com/item153 
+					</value> <value>http://test.com/item154 </value> <value>http://test.com/item155 
+					</value> <value>http://test.com/item156 </value> <value>http://test.com/item157 
+					</value> <value>http://test.com/item158 </value> <value>http://test.com/item159 
+					</value> <value>http://test.com/item160 </value> <value>http://test.com/item161 
+					</value> <value>http://test.com/item162 </value> <value>http://test.com/item163 
+					</value> <value>http://test.com/item164 </value> <value>http://test.com/item165 
+					</value> <value>http://test.com/item166 </value> <value>http://test.com/item167 
+					</value> <value>http://test.com/item168 </value> <value>http://test.com/item169 
+					</value> <value>http://test.com/item170 </value> <value>http://test.com/item171 
+					</value> <value>http://test.com/item172 </value> <value>http://test.com/item173 
+					</value> <value>http://test.com/item174 </value> <value>http://test.com/item175 
+					</value> <value>http://test.com/item176 </value> <value>http://test.com/item177 
+					</value> <value>http://test.com/item178 </value> <value>http://test.com/item179 
+					</value> <value>http://test.com/item180 </value> <value>http://test.com/item181 
+					</value> <value>http://test.com/item182 </value> <value>http://test.com/item183 
+					</value> <value>http://test.com/item184 </value> <value>http://test.com/item185 
+					</value> <value>http://test.com/item186 </value> <value>http://test.com/item187 
+					</value> <value>http://test.com/item188 </value> <value>http://test.com/item189 
+					</value> <value>http://test.com/item190 </value> <value>http://test.com/item191 
+					</value> <value>http://test.com/item192 </value> <value>http://test.com/item193 
+					</value> <value>http://test.com/item194 </value> <value>http://test.com/item195 
+					</value> <value>http://test.com/item196 </value> <value>http://test.com/item197 
+					</value> <value>http://test.com/item198 </value> <value>http://test.com/item199 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item200 
+					</value> <value>http://test.com/item201 </value> <value>http://test.com/item202 
+					</value> <value>http://test.com/item203 </value> <value>http://test.com/item204 
+					</value> <value>http://test.com/item205 </value> <value>http://test.com/item206 
+					</value> <value>http://test.com/item207 </value> <value>http://test.com/item208 
+					</value> <value>http://test.com/item209 </value> <value>http://test.com/item210 
+					</value> <value>http://test.com/item211 </value> <value>http://test.com/item212 
+					</value> <value>http://test.com/item213 </value> <value>http://test.com/item214 
+					</value> <value>http://test.com/item215 </value> <value>http://test.com/item216 
+					</value> <value>http://test.com/item217 </value> <value>http://test.com/item218 
+					</value> <value>http://test.com/item219 </value> <value>http://test.com/item220 
+					</value> <value>http://test.com/item221 </value> <value>http://test.com/item222 
+					</value> <value>http://test.com/item223 </value> <value>http://test.com/item224 
+					</value> <value>http://test.com/item225 </value> <value>http://test.com/item226 
+					</value> <value>http://test.com/item227 </value> <value>http://test.com/item228 
+					</value> <value>http://test.com/item229 </value> <value>http://test.com/item230 
+					</value> <value>http://test.com/item231 </value> <value>http://test.com/item232 
+					</value> <value>http://test.com/item233 </value> <value>http://test.com/item234 
+					</value> <value>http://test.com/item235 </value> <value>http://test.com/item236 
+					</value> <value>http://test.com/item237 </value> <value>http://test.com/item238 
+					</value> <value>http://test.com/item239 </value> <value>http://test.com/item240 
+					</value> <value>http://test.com/item241 </value> <value>http://test.com/item242 
+					</value> <value>http://test.com/item243 </value> <value>http://test.com/item244 
+					</value> <value>http://test.com/item245 </value> <value>http://test.com/item246 
+					</value> <value>http://test.com/item247 </value> <value>http://test.com/item248 
+					</value> <value>http://test.com/item249 </value> <value>http://test.com/item250 
+					</value> <value>http://test.com/item251 </value> <value>http://test.com/item252 
+					</value> <value>http://test.com/item253 </value> <value>http://test.com/item254 
+					</value> <value>http://test.com/item255 </value> <value>http://test.com/item256 
+					</value> <value>http://test.com/item257 </value> <value>http://test.com/item258 
+					</value> <value>http://test.com/item259 </value> <value>http://test.com/item260 
+					</value> <value>http://test.com/item261 </value> <value>http://test.com/item262 
+					</value> <value>http://test.com/item263 </value> <value>http://test.com/item264 
+					</value> <value>http://test.com/item265 </value> <value>http://test.com/item266 
+					</value> <value>http://test.com/item267 </value> <value>http://test.com/item268 
+					</value> <value>http://test.com/item269 </value> <value>http://test.com/item270 
+					</value> <value>http://test.com/item271 </value> <value>http://test.com/item272 
+					</value> <value>http://test.com/item273 </value> <value>http://test.com/item274 
+					</value> <value>http://test.com/item275 </value> <value>http://test.com/item276 
+					</value> <value>http://test.com/item277 </value> <value>http://test.com/item278 
+					</value> <value>http://test.com/item279 </value> <value>http://test.com/item280 
+					</value> <value>http://test.com/item281 </value> <value>http://test.com/item282 
+					</value> <value>http://test.com/item283 </value> <value>http://test.com/item284 
+					</value> <value>http://test.com/item285 </value> <value>http://test.com/item286 
+					</value> <value>http://test.com/item287 </value> <value>http://test.com/item288 
+					</value> <value>http://test.com/item289 </value> <value>http://test.com/item290 
+					</value> <value>http://test.com/item291 </value> <value>http://test.com/item292 
+					</value> <value>http://test.com/item293 </value> <value>http://test.com/item294 
+					</value> <value>http://test.com/item295 </value> <value>http://test.com/item296 
+					</value> <value>http://test.com/item297 </value> <value>http://test.com/item298 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item299 
+					</value> <value>http://test.com/item300 </value> <value>http://test.com/item301 
+					</value> <value>http://test.com/item302 </value> <value>http://test.com/item303 
+					</value> <value>http://test.com/item304 </value> <value>http://test.com/item305 
+					</value> <value>http://test.com/item306 </value> <value>http://test.com/item307 
+					</value> <value>http://test.com/item308 </value> <value>http://test.com/item309 
+					</value> <value>http://test.com/item310 </value> <value>http://test.com/item311 
+					</value> <value>http://test.com/item312 </value> <value>http://test.com/item313 
+					</value> <value>http://test.com/item314 </value> <value>http://test.com/item315 
+					</value> <value>http://test.com/item316 </value> <value>http://test.com/item317 
+					</value> <value>http://test.com/item318 </value> <value>http://test.com/item319 
+					</value> <value>http://test.com/item320 </value> <value>http://test.com/item321 
+					</value> <value>http://test.com/item322 </value> <value>http://test.com/item323 
+					</value> <value>http://test.com/item324 </value> <value>http://test.com/item325 
+					</value> <value>http://test.com/item326 </value> <value>http://test.com/item327 
+					</value> <value>http://test.com/item328 </value> <value>http://test.com/item329 
+					</value> <value>http://test.com/item330 </value> <value>http://test.com/item331 
+					</value> <value>http://test.com/item332 </value> <value>http://test.com/item333 
+					</value> <value>http://test.com/item334 </value> <value>http://test.com/item335 
+					</value> <value>http://test.com/item336 </value> <value>http://test.com/item337 
+					</value> <value>http://test.com/item338 </value> <value>http://test.com/item339 
+					</value> <value>http://test.com/item340 </value> <value>http://test.com/item341 
+					</value> <value>http://test.com/item342 </value> <value>http://test.com/item343 
+					</value> <value>http://test.com/item344 </value> <value>http://test.com/item345 
+					</value> <value>http://test.com/item346 </value> <value>http://test.com/item347 
+					</value> <value>http://test.com/item348 </value> <value>http://test.com/item349 
+					</value> <value>http://test.com/item350 </value> <value>http://test.com/item351 
+					</value> <value>http://test.com/item352 </value> <value>http://test.com/item353 
+					</value> <value>http://test.com/item354 </value> <value>http://test.com/item355 
+					</value> <value>http://test.com/item356 </value> <value>http://test.com/item357 
+					</value> <value>http://test.com/item358 </value> <value>http://test.com/item359 
+					</value> <value>http://test.com/item360 </value> <value>http://test.com/item361 
+					</value> <value>http://test.com/item362 </value> <value>http://test.com/item363 
+					</value> <value>http://test.com/item364 </value> <value>http://test.com/item365 
+					</value> <value>http://test.com/item366 </value> <value>http://test.com/item367 
+					</value> <value>http://test.com/item368 </value> <value>http://test.com/item369 
+					</value> <value>http://test.com/item370 </value> <value>http://test.com/item371 
+					</value> <value>http://test.com/item372 </value> <value>http://test.com/item373 
+					</value> <value>http://test.com/item374 </value> <value>http://test.com/item375 
+					</value> <value>http://test.com/item376 </value> <value>http://test.com/item377 
+					</value> <value>http://test.com/item378 </value> <value>http://test.com/item379 
+					</value> <value>http://test.com/item380 </value> <value>http://test.com/item381 
+					</value> <value>http://test.com/item382 </value> <value>http://test.com/item383 
+					</value> <value>http://test.com/item384 </value> <value>http://test.com/item385 
+					</value> <value>http://test.com/item386 </value> <value>http://test.com/item387 
+					</value> <value>http://test.com/item388 </value> <value>http://test.com/item389 
+					</value> <value>http://test.com/item390 </value> <value>http://test.com/item391 
+					</value> <value>http://test.com/item392 </value> <value>http://test.com/item393 
+					</value> <value>http://test.com/item394 </value> <value>http://test.com/item395 
+					</value> <value>http://test.com/item396 </value> <value>http://test.com/item397 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item398 
+					</value> <value>http://test.com/item399 </value> <value>http://test.com/item400 
+					</value> <value>http://test.com/item401 </value> <value>http://test.com/item402 
+					</value> <value>http://test.com/item403 </value> <value>http://test.com/item404 
+					</value> <value>http://test.com/item405 </value> <value>http://test.com/item406 
+					</value> <value>http://test.com/item407 </value> <value>http://test.com/item408 
+					</value> <value>http://test.com/item409 </value> <value>http://test.com/item410 
+					</value> <value>http://test.com/item411 </value> <value>http://test.com/item412 
+					</value> <value>http://test.com/item413 </value> <value>http://test.com/item414 
+					</value> <value>http://test.com/item415 </value> <value>http://test.com/item416 
+					</value> <value>http://test.com/item417 </value> <value>http://test.com/item418 
+					</value> <value>http://test.com/item419 </value> <value>http://test.com/item420 
+					</value> <value>http://test.com/item421 </value> <value>http://test.com/item422 
+					</value> <value>http://test.com/item423 </value> <value>http://test.com/item424 
+					</value> <value>http://test.com/item425 </value> <value>http://test.com/item426 
+					</value> <value>http://test.com/item427 </value> <value>http://test.com/item428 
+					</value> <value>http://test.com/item429 </value> <value>http://test.com/item430 
+					</value> <value>http://test.com/item431 </value> <value>http://test.com/item432 
+					</value> <value>http://test.com/item433 </value> <value>http://test.com/item434 
+					</value> <value>http://test.com/item435 </value> <value>http://test.com/item436 
+					</value> <value>http://test.com/item437 </value> <value>http://test.com/item438 
+					</value> <value>http://test.com/item439 </value> <value>http://test.com/item440 
+					</value> <value>http://test.com/item441 </value> <value>http://test.com/item442 
+					</value> <value>http://test.com/item443 </value> <value>http://test.com/item444 
+					</value> <value>http://test.com/item445 </value> <value>http://test.com/item446 
+					</value> <value>http://test.com/item447 </value> <value>http://test.com/item448 
+					</value> <value>http://test.com/item449 </value> <value>http://test.com/item450 
+					</value> <value>http://test.com/item451 </value> <value>http://test.com/item452 
+					</value> <value>http://test.com/item453 </value> <value>http://test.com/item454 
+					</value> <value>http://test.com/item455 </value> <value>http://test.com/item456 
+					</value> <value>http://test.com/item457 </value> <value>http://test.com/item458 
+					</value> <value>http://test.com/item459 </value> <value>http://test.com/item460 
+					</value> <value>http://test.com/item461 </value> <value>http://test.com/item462 
+					</value> <value>http://test.com/item463 </value> <value>http://test.com/item464 
+					</value> <value>http://test.com/item465 </value> <value>http://test.com/item466 
+					</value> <value>http://test.com/item467 </value> <value>http://test.com/item468 
+					</value> <value>http://test.com/item469 </value> <value>http://test.com/item470 
+					</value> <value>http://test.com/item471 </value> <value>http://test.com/item472 
+					</value> <value>http://test.com/item473 </value> <value>http://test.com/item474 
+					</value> <value>http://test.com/item475 </value> <value>http://test.com/item476 
+					</value> <value>http://test.com/item477 </value> <value>http://test.com/item478 
+					</value> <value>http://test.com/item479 </value> <value>http://test.com/item480 
+					</value> <value>http://test.com/item481 </value> <value>http://test.com/item482 
+					</value> <value>http://test.com/item483 </value> <value>http://test.com/item484 
+					</value> <value>http://test.com/item485 </value> <value>http://test.com/item486 
+					</value> <value>http://test.com/item487 </value> <value>http://test.com/item488 
+					</value> <value>http://test.com/item489 </value> <value>http://test.com/item490 
+					</value> <value>http://test.com/item491 </value> <value>http://test.com/item492 
+					</value> <value>http://test.com/item493 </value> <value>http://test.com/item494 
+					</value> <value>http://test.com/item495 </value> <value>http://test.com/item496 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item497 
+					</value> <value>http://test.com/item498 </value> <value>http://test.com/item499 
+					</value> <value>http://test.com/item500 </value> <value>http://test.com/item501 
+					</value> <value>http://test.com/item502 </value> <value>http://test.com/item503 
+					</value> <value>http://test.com/item504 </value> <value>http://test.com/item505 
+					</value> <value>http://test.com/item506 </value> <value>http://test.com/item507 
+					</value> <value>http://test.com/item508 </value> <value>http://test.com/item509 
+					</value> <value>http://test.com/item510 </value> <value>http://test.com/item511 
+					</value> <value>http://test.com/item512 </value> <value>http://test.com/item513 
+					</value> <value>http://test.com/item514 </value> <value>http://test.com/item515 
+					</value> <value>http://test.com/item516 </value> <value>http://test.com/item517 
+					</value> <value>http://test.com/item518 </value> <value>http://test.com/item519 
+					</value> <value>http://test.com/item520 </value> <value>http://test.com/item521 
+					</value> <value>http://test.com/item522 </value> <value>http://test.com/item523 
+					</value> <value>http://test.com/item524 </value> <value>http://test.com/item525 
+					</value> <value>http://test.com/item526 </value> <value>http://test.com/item527 
+					</value> <value>http://test.com/item528 </value> <value>http://test.com/item529 
+					</value> <value>http://test.com/item530 </value> <value>http://test.com/item531 
+					</value> <value>http://test.com/item532 </value> <value>http://test.com/item533 
+					</value> <value>http://test.com/item534 </value> <value>http://test.com/item535 
+					</value> <value>http://test.com/item536 </value> <value>http://test.com/item537 
+					</value> <value>http://test.com/item538 </value> <value>http://test.com/item539 
+					</value> <value>http://test.com/item540 </value> <value>http://test.com/item541 
+					</value> <value>http://test.com/item542 </value> <value>http://test.com/item543 
+					</value> <value>http://test.com/item544 </value> <value>http://test.com/item545 
+					</value> <value>http://test.com/item546 </value> <value>http://test.com/item547 
+					</value> <value>http://test.com/item548 </value> <value>http://test.com/item549 
+					</value> <value>http://test.com/item550 </value> <value>http://test.com/item551 
+					</value> <value>http://test.com/item552 </value> <value>http://test.com/item553 
+					</value> <value>http://test.com/item554 </value> <value>http://test.com/item555 
+					</value> <value>http://test.com/item556 </value> <value>http://test.com/item557 
+					</value> <value>http://test.com/item558 </value> <value>http://test.com/item559 
+					</value> <value>http://test.com/item560 </value> <value>http://test.com/item561 
+					</value> <value>http://test.com/item562 </value> <value>http://test.com/item563 
+					</value> <value>http://test.com/item564 </value> <value>http://test.com/item565 
+					</value> <value>http://test.com/item566 </value> <value>http://test.com/item567 
+					</value> <value>http://test.com/item568 </value> <value>http://test.com/item569 
+					</value> <value>http://test.com/item570 </value> <value>http://test.com/item571 
+					</value> <value>http://test.com/item572 </value> <value>http://test.com/item573 
+					</value> <value>http://test.com/item574 </value> <value>http://test.com/item575 
+					</value> <value>http://test.com/item576 </value> <value>http://test.com/item577 
+					</value> <value>http://test.com/item578 </value> <value>http://test.com/item579 
+					</value> <value>http://test.com/item580 </value> <value>http://test.com/item581 
+					</value> <value>http://test.com/item582 </value> <value>http://test.com/item583 
+					</value> <value>http://test.com/item584 </value> <value>http://test.com/item585 
+					</value> <value>http://test.com/item586 </value> <value>http://test.com/item587 
+					</value> <value>http://test.com/item588 </value> <value>http://test.com/item589 
+					</value> <value>http://test.com/item590 </value> <value>http://test.com/item591 
+					</value> <value>http://test.com/item592 </value> <value>http://test.com/item593 
+					</value> <value>http://test.com/item594 </value> <value>http://test.com/item595 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item596 
+					</value> <value>http://test.com/item597 </value> <value>http://test.com/item598 
+					</value> <value>http://test.com/item599 </value> <value>http://test.com/item600 
+					</value> <value>http://test.com/item601 </value> <value>http://test.com/item602 
+					</value> <value>http://test.com/item603 </value> <value>http://test.com/item604 
+					</value> <value>http://test.com/item605 </value> <value>http://test.com/item606 
+					</value> <value>http://test.com/item607 </value> <value>http://test.com/item608 
+					</value> <value>http://test.com/item609 </value> <value>http://test.com/item610 
+					</value> <value>http://test.com/item611 </value> <value>http://test.com/item612 
+					</value> <value>http://test.com/item613 </value> <value>http://test.com/item614 
+					</value> <value>http://test.com/item615 </value> <value>http://test.com/item616 
+					</value> <value>http://test.com/item617 </value> <value>http://test.com/item618 
+					</value> <value>http://test.com/item619 </value> <value>http://test.com/item620 
+					</value> <value>http://test.com/item621 </value> <value>http://test.com/item622 
+					</value> <value>http://test.com/item623 </value> <value>http://test.com/item624 
+					</value> <value>http://test.com/item625 </value> <value>http://test.com/item626 
+					</value> <value>http://test.com/item627 </value> <value>http://test.com/item628 
+					</value> <value>http://test.com/item629 </value> <value>http://test.com/item630 
+					</value> <value>http://test.com/item631 </value> <value>http://test.com/item632 
+					</value> <value>http://test.com/item633 </value> <value>http://test.com/item634 
+					</value> <value>http://test.com/item635 </value> <value>http://test.com/item636 
+					</value> <value>http://test.com/item637 </value> <value>http://test.com/item638 
+					</value> <value>http://test.com/item639 </value> <value>http://test.com/item640 
+					</value> <value>http://test.com/item641 </value> <value>http://test.com/item642 
+					</value> <value>http://test.com/item643 </value> <value>http://test.com/item644 
+					</value> <value>http://test.com/item645 </value> <value>http://test.com/item646 
+					</value> <value>http://test.com/item647 </value> <value>http://test.com/item648 
+					</value> <value>http://test.com/item649 </value> <value>http://test.com/item650 
+					</value> <value>http://test.com/item651 </value> <value>http://test.com/item652 
+					</value> <value>http://test.com/item653 </value> <value>http://test.com/item654 
+					</value> <value>http://test.com/item655 </value> <value>http://test.com/item656 
+					</value> <value>http://test.com/item657 </value> <value>http://test.com/item658 
+					</value> <value>http://test.com/item659 </value> <value>http://test.com/item660 
+					</value> <value>http://test.com/item661 </value> <value>http://test.com/item662 
+					</value> <value>http://test.com/item663 </value> <value>http://test.com/item664 
+					</value> <value>http://test.com/item665 </value> <value>http://test.com/item666 
+					</value> <value>http://test.com/item667 </value> <value>http://test.com/item668 
+					</value> <value>http://test.com/item669 </value> <value>http://test.com/item670 
+					</value> <value>http://test.com/item671 </value> <value>http://test.com/item672 
+					</value> <value>http://test.com/item673 </value> <value>http://test.com/item674 
+					</value> <value>http://test.com/item675 </value> <value>http://test.com/item676 
+					</value> <value>http://test.com/item677 </value> <value>http://test.com/item678 
+					</value> <value>http://test.com/item679 </value> <value>http://test.com/item680 
+					</value> <value>http://test.com/item681 </value> <value>http://test.com/item682 
+					</value> <value>http://test.com/item683 </value> <value>http://test.com/item684 
+					</value> <value>http://test.com/item685 </value> <value>http://test.com/item686 
+					</value> <value>http://test.com/item687 </value> <value>http://test.com/item688 
+					</value> <value>http://test.com/item689 </value> <value>http://test.com/item690 
+					</value> <value>http://test.com/item691 </value> <value>http://test.com/item692 
+					</value> <value>http://test.com/item693 </value> <value>http://test.com/item694 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item695 
+					</value> <value>http://test.com/item696 </value> <value>http://test.com/item697 
+					</value> <value>http://test.com/item698 </value> <value>http://test.com/item699 
+					</value> <value>http://test.com/item700 </value> <value>http://test.com/item701 
+					</value> <value>http://test.com/item702 </value> <value>http://test.com/item703 
+					</value> <value>http://test.com/item704 </value> <value>http://test.com/item705 
+					</value> <value>http://test.com/item706 </value> <value>http://test.com/item707 
+					</value> <value>http://test.com/item708 </value> <value>http://test.com/item709 
+					</value> <value>http://test.com/item710 </value> <value>http://test.com/item711 
+					</value> <value>http://test.com/item712 </value> <value>http://test.com/item713 
+					</value> <value>http://test.com/item714 </value> <value>http://test.com/item715 
+					</value> <value>http://test.com/item716 </value> <value>http://test.com/item717 
+					</value> <value>http://test.com/item718 </value> <value>http://test.com/item719 
+					</value> <value>http://test.com/item720 </value> <value>http://test.com/item721 
+					</value> <value>http://test.com/item722 </value> <value>http://test.com/item723 
+					</value> <value>http://test.com/item724 </value> <value>http://test.com/item725 
+					</value> <value>http://test.com/item726 </value> <value>http://test.com/item727 
+					</value> <value>http://test.com/item728 </value> <value>http://test.com/item729 
+					</value> <value>http://test.com/item730 </value> <value>http://test.com/item731 
+					</value> <value>http://test.com/item732 </value> <value>http://test.com/item733 
+					</value> <value>http://test.com/item734 </value> <value>http://test.com/item735 
+					</value> <value>http://test.com/item736 </value> <value>http://test.com/item737 
+					</value> <value>http://test.com/item738 </value> <value>http://test.com/item739 
+					</value> <value>http://test.com/item740 </value> <value>http://test.com/item741 
+					</value> <value>http://test.com/item742 </value> <value>http://test.com/item743 
+					</value> <value>http://test.com/item744 </value> <value>http://test.com/item745 
+					</value> <value>http://test.com/item746 </value> <value>http://test.com/item747 
+					</value> <value>http://test.com/item748 </value> <value>http://test.com/item749 
+					</value> <value>http://test.com/item750 </value> <value>http://test.com/item751 
+					</value> <value>http://test.com/item752 </value> <value>http://test.com/item753 
+					</value> <value>http://test.com/item754 </value> <value>http://test.com/item755 
+					</value> <value>http://test.com/item756 </value> <value>http://test.com/item757 
+					</value> <value>http://test.com/item758 </value> <value>http://test.com/item759 
+					</value> <value>http://test.com/item760 </value> <value>http://test.com/item761 
+					</value> <value>http://test.com/item762 </value> <value>http://test.com/item763 
+					</value> <value>http://test.com/item764 </value> <value>http://test.com/item765 
+					</value> <value>http://test.com/item766 </value> <value>http://test.com/item767 
+					</value> <value>http://test.com/item768 </value> <value>http://test.com/item769 
+					</value> <value>http://test.com/item770 </value> <value>http://test.com/item771 
+					</value> <value>http://test.com/item772 </value> <value>http://test.com/item773 
+					</value> <value>http://test.com/item774 </value> <value>http://test.com/item775 
+					</value> <value>http://test.com/item776 </value> <value>http://test.com/item777 
+					</value> <value>http://test.com/item778 </value> <value>http://test.com/item779 
+					</value> <value>http://test.com/item780 </value> <value>http://test.com/item781 
+					</value> <value>http://test.com/item782 </value> <value>http://test.com/item783 
+					</value> <value>http://test.com/item784 </value> <value>http://test.com/item785 
+					</value> <value>http://test.com/item786 </value> <value>http://test.com/item787 
+					</value> <value>http://test.com/item788 </value> <value>http://test.com/item789 
+					</value> <value>http://test.com/item790 </value> <value>http://test.com/item791 
+					</value> <value>http://test.com/item792 </value> <value>http://test.com/item793 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item794 
+					</value> <value>http://test.com/item795 </value> <value>http://test.com/item796 
+					</value> <value>http://test.com/item797 </value> <value>http://test.com/item798 
+					</value> <value>http://test.com/item799 </value> <value>http://test.com/item800 
+					</value> <value>http://test.com/item801 </value> <value>http://test.com/item802 
+					</value> <value>http://test.com/item803 </value> <value>http://test.com/item804 
+					</value> <value>http://test.com/item805 </value> <value>http://test.com/item806 
+					</value> <value>http://test.com/item807 </value> <value>http://test.com/item808 
+					</value> <value>http://test.com/item809 </value> <value>http://test.com/item810 
+					</value> <value>http://test.com/item811 </value> <value>http://test.com/item812 
+					</value> <value>http://test.com/item813 </value> <value>http://test.com/item814 
+					</value> <value>http://test.com/item815 </value> <value>http://test.com/item816 
+					</value> <value>http://test.com/item817 </value> <value>http://test.com/item818 
+					</value> <value>http://test.com/item819 </value> <value>http://test.com/item820 
+					</value> <value>http://test.com/item821 </value> <value>http://test.com/item822 
+					</value> <value>http://test.com/item823 </value> <value>http://test.com/item824 
+					</value> <value>http://test.com/item825 </value> <value>http://test.com/item826 
+					</value> <value>http://test.com/item827 </value> <value>http://test.com/item828 
+					</value> <value>http://test.com/item829 </value> <value>http://test.com/item830 
+					</value> <value>http://test.com/item831 </value> <value>http://test.com/item832 
+					</value> <value>http://test.com/item833 </value> <value>http://test.com/item834 
+					</value> <value>http://test.com/item835 </value> <value>http://test.com/item836 
+					</value> <value>http://test.com/item837 </value> <value>http://test.com/item838 
+					</value> <value>http://test.com/item839 </value> <value>http://test.com/item840 
+					</value> <value>http://test.com/item841 </value> <value>http://test.com/item842 
+					</value> <value>http://test.com/item843 </value> <value>http://test.com/item844 
+					</value> <value>http://test.com/item845 </value> <value>http://test.com/item846 
+					</value> <value>http://test.com/item847 </value> <value>http://test.com/item848 
+					</value> <value>http://test.com/item849 </value> <value>http://test.com/item850 
+					</value> <value>http://test.com/item851 </value> <value>http://test.com/item852 
+					</value> <value>http://test.com/item853 </value> <value>http://test.com/item854 
+					</value> <value>http://test.com/item855 </value> <value>http://test.com/item856 
+					</value> <value>http://test.com/item857 </value> <value>http://test.com/item858 
+					</value> <value>http://test.com/item859 </value> <value>http://test.com/item860 
+					</value> <value>http://test.com/item861 </value> <value>http://test.com/item862 
+					</value> <value>http://test.com/item863 </value> <value>http://test.com/item864 
+					</value> <value>http://test.com/item865 </value> <value>http://test.com/item866 
+					</value> <value>http://test.com/item867 </value> <value>http://test.com/item868 
+					</value> <value>http://test.com/item869 </value> <value>http://test.com/item870 
+					</value> <value>http://test.com/item871 </value> <value>http://test.com/item872 
+					</value> <value>http://test.com/item873 </value> <value>http://test.com/item874 
+					</value> <value>http://test.com/item875 </value> <value>http://test.com/item876 
+					</value> <value>http://test.com/item877 </value> <value>http://test.com/item878 
+					</value> <value>http://test.com/item879 </value> <value>http://test.com/item880 
+					</value> <value>http://test.com/item881 </value> <value>http://test.com/item882 
+					</value> <value>http://test.com/item883 </value> <value>http://test.com/item884 
+					</value> <value>http://test.com/item885 </value> <value>http://test.com/item886 
+					</value> <value>http://test.com/item887 </value> <value>http://test.com/item888 
+					</value> <value>http://test.com/item889 </value> <value>http://test.com/item890 
+					</value> <value>http://test.com/item891 </value> <value>http://test.com/item892 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item893 
+					</value> <value>http://test.com/item894 </value> <value>http://test.com/item895 
+					</value> <value>http://test.com/item896 </value> <value>http://test.com/item897 
+					</value> <value>http://test.com/item898 </value> <value>http://test.com/item899 
+					</value> <value>http://test.com/item900 </value> <value>http://test.com/item901 
+					</value> <value>http://test.com/item902 </value> <value>http://test.com/item903 
+					</value> <value>http://test.com/item904 </value> <value>http://test.com/item905 
+					</value> <value>http://test.com/item906 </value> <value>http://test.com/item907 
+					</value> <value>http://test.com/item908 </value> <value>http://test.com/item909 
+					</value> <value>http://test.com/item910 </value> <value>http://test.com/item911 
+					</value> <value>http://test.com/item912 </value> <value>http://test.com/item913 
+					</value> <value>http://test.com/item914 </value> <value>http://test.com/item915 
+					</value> <value>http://test.com/item916 </value> <value>http://test.com/item917 
+					</value> <value>http://test.com/item918 </value> <value>http://test.com/item919 
+					</value> <value>http://test.com/item920 </value> <value>http://test.com/item921 
+					</value> <value>http://test.com/item922 </value> <value>http://test.com/item923 
+					</value> <value>http://test.com/item924 </value> <value>http://test.com/item925 
+					</value> <value>http://test.com/item926 </value> <value>http://test.com/item927 
+					</value> <value>http://test.com/item928 </value> <value>http://test.com/item929 
+					</value> <value>http://test.com/item930 </value> <value>http://test.com/item931 
+					</value> <value>http://test.com/item932 </value> <value>http://test.com/item933 
+					</value> <value>http://test.com/item934 </value> <value>http://test.com/item935 
+					</value> <value>http://test.com/item936 </value> <value>http://test.com/item937 
+					</value> <value>http://test.com/item938 </value> <value>http://test.com/item939 
+					</value> <value>http://test.com/item940 </value> <value>http://test.com/item941 
+					</value> <value>http://test.com/item942 </value> <value>http://test.com/item943 
+					</value> <value>http://test.com/item944 </value> <value>http://test.com/item945 
+					</value> <value>http://test.com/item946 </value> <value>http://test.com/item947 
+					</value> <value>http://test.com/item948 </value> <value>http://test.com/item949 
+					</value> <value>http://test.com/item950 </value> <value>http://test.com/item951 
+					</value> <value>http://test.com/item952 </value> <value>http://test.com/item953 
+					</value> <value>http://test.com/item954 </value> <value>http://test.com/item955 
+					</value> <value>http://test.com/item956 </value> <value>http://test.com/item957 
+					</value> <value>http://test.com/item958 </value> <value>http://test.com/item959 
+					</value> <value>http://test.com/item960 </value> <value>http://test.com/item961 
+					</value> <value>http://test.com/item962 </value> <value>http://test.com/item963 
+					</value> <value>http://test.com/item964 </value> <value>http://test.com/item965 
+					</value> <value>http://test.com/item966 </value> <value>http://test.com/item967 
+					</value> <value>http://test.com/item968 </value> <value>http://test.com/item969 
+					</value> <value>http://test.com/item970 </value> <value>http://test.com/item971 
+					</value> <value>http://test.com/item972 </value> <value>http://test.com/item973 
+					</value> <value>http://test.com/item974 </value> <value>http://test.com/item975 
+					</value> <value>http://test.com/item976 </value> <value>http://test.com/item977 
+					</value> <value>http://test.com/item978 </value> <value>http://test.com/item979 
+					</value> <value>http://test.com/item980 </value> <value>http://test.com/item981 
+					</value> <value>http://test.com/item982 </value> <value>http://test.com/item983 
+					</value> <value>http://test.com/item984 </value> <value>http://test.com/item985 
+					</value> <value>http://test.com/item986 </value> <value>http://test.com/item987 
+					</value> <value>http://test.com/item988 </value> <value>http://test.com/item989 
+					</value> <value>http://test.com/item990 </value> <value>http://test.com/item991 
+					</value> <value>http://test.com/item1 </value> <value>http://test.com/item992 
+					</value> <value>http://test.com/item993 </value> <value>http://test.com/item994 
+					</value> <value>http://test.com/item995 </value> <value>http://test.com/item996 
+					</value> <value>http://test.com/item997 </value> <value>http://test.com/item998 
+					</value> <value>http://test.com/item999 </value> <value>http://test.com/item1000</value> 
+					<value>http://test.com/item1001</value> <value>http://test.com/item1002</value> 
+					<value>http://test.com/item1003</value> <value>http://test.com/item1004</value> 
+					<value>http://test.com/item1005</value> <value>http://test.com/item1006</value> 
+					<value>http://test.com/item1007</value> <value>http://test.com/item1008</value> 
+					<value>http://test.com/item1009</value> <value>http://test.com/item1010</value> 
+					<value>http://test.com/item1011</value> <value>http://test.com/item1012</value> 
+					<value>http://test.com/item1013</value> <value>http://test.com/item1014</value> 
+					<value>http://test.com/item1015</value> 
+			</list>
+		</property>
+	</bean>
+
+	<bean id="processor"
+		class="com.opencredo.sandbox.gawain.springbatch.remote.chunking.TestItemProcessor">
+		<beans:property name="processorName" value="master-processor" />
+	</bean>
+
+	<bean id="writer"
+		class="com.opencredo.sandbox.gawain.springbatch.remote.chunking.TestItemWriter">
+		<beans:property name="writerName" value="master-writer" />
+	</bean>
+
+	<bean id="chunkWriter"
+		class="org.springframework.batch.integration.chunk.ChunkItemMessageMasterWriter"
+		scope="step">
+		<property name="messagingOperations" ref="masterMessagingGateway" />
+		<property name="throttleLimit" value="10" />
+	</bean>
+	<bean id="chunkHandler"
+		class="org.springframework.batch.integration.chunk.ChunkMasterHandlerFactoryBean">
+		<property name="chunkWriter" ref="chunkWriter" />
+		<property name="step" ref="step" />
+	</bean>
+
+	<bean id="masterMessagingGateway" class="org.springframework.batch.message.ChunkMessageMasterGateway" init-method="onInit" destroy-method="onClose">
+		<property name="mqURL" value="${rmq.url}" />
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+	<bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+
+	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+	<bean id="threadPoolTaskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="100" />
+		<property name="queueCapacity" value="20000" />
+		<property name="maxPoolSize" value="500" />
+		<property name="keepAliveSeconds" value="30000" />
+	</bean>
+
+</beans>

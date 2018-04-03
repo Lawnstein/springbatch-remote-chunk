@@ -1,0 +1,21 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<context:property-placeholder order="1"
+		location="classpath*:application.properties" ignore-unresolvable="true" />
+
+	<beans profile="all,master">	
+		<import resource="classpath*:/master-rmq/master-batch-context.xml" />
+ 		<bean class="com.opencredo.sandbox.gawain.springbatch.remote.service.MasterService" init-method="start" destroy-method="shutdown"/>
+	</beans>
+	
+	<beans profile="all,slave">
+		<import resource="classpath*:/slave-rmq/slave1-batch-context.xml" />
+	</beans>
+	
+</beans>

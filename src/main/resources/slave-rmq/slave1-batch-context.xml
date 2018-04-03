@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:integration="http://www.springframework.org/schema/integration"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<context:property-placeholder order="1"
+		location="classpath*:application.properties" ignore-unresolvable="true" />
+
+	<bean id="slaveMessagingGateway" class="org.springframework.batch.message.ChunkMessageSlaveGateway" init-method="onInit" destroy-method="onClose">
+		<property name="mqURL" value="${rmq.url}" />
+		<property name="handler" ref="slaveHandler" />
+	</bean>
+
+	<bean id="slaveHandler" class="org.springframework.batch.integration.chunk.ChunkItemMessageSlaveHandler">
+		<property name="messagingGateway" ref="slaveMessagingGateway" />
+		<property name="taskExecutor" ref="slaveThreadPoolTaskExecutor" />
+	</bean>
+	<!-- The Slave ItemWriter that does the writing -->
+	<bean id="processor"
+		class="com.opencredo.sandbox.gawain.springbatch.remote.chunking.TestItemProcessor">
+		<beans:property name="processorName" value="slave-processor" />
+	</bean>
+	
+	<bean id="writer"
+		class="com.opencredo.sandbox.gawain.springbatch.remote.chunking.TestItemWriter">
+		<beans:property name="writerName" value="slave-writer" />
+	</bean>
+
+
+	<bean id="slaveThreadPoolTaskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="100" />
+		<property name="queueCapacity" value="20000" />
+		<property name="maxPoolSize" value="500" />
+		<property name="keepAliveSeconds" value="30000" />
+	</bean>
+</beans>
